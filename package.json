@@ -2,13 +2,19 @@
   "name": "tg-auction-bot",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
+  "type": "commonjs",
   "scripts": {
+    "start.dev": "npx nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Malyugin Artem",
   "license": "ISC",
   "dependencies": {
+    "mongoose": "^7.4.5",
     "node-telegram-bot-api": "^0.61.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.0.1"
   }
 }
