@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "typeRoots": [
+            " ./node_modules/@types ",
+            " ./node_modules/telegram-webapps-types "
+        ]
+    },
+    "include": [
+        "src"
+    ]
+}
