@@ -1,20 +1,36 @@
 version: '3.4'
 
 services:
-  tgauctionbot:
-    image: tgauctionbot
-    
+  auction-react-app:
+    image: tg-auction-react-app
     build:
-      context: .
+      context: ./auction-react-app
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./auction-react-app:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - app-network
+  tg-auction-bot:
+    image: tg-auction-bot
+    build:
+      context: ./telegram-api
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: development
       DB_NAME: auction_db
+      DB_HOST: db
     ports:
       - 3001:3001
     volumes:
-      - .:/usr/src/app
+      - ./telegram-api:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+    - app-network
   db:
     image: mongo:latest
     restart: always
@@ -26,3 +42,8 @@ services:
       - 27017:27017
     volumes:
       - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - app-network
+networks:
+  app-network: 
+    driver: bridge
