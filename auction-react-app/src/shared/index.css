@@ -1,6 +1,66 @@
 @import url('https://unpkg.com/css.gg@2.0.0/icons/css/check.css');
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/close.css');
+
+.form-floating>label,
+.form-control:focus,
+.form-label,
+:is(h1, h2, h3, h4, h5, h6),
+input,
+label[class*="-MuiFormLabel-root-MuiInputLabel-root"],
+button[class*="-MuiButtonBase-root-MuiIconButton-root"] {
+    color: var(--tg-theme-text-color) !important;
+}
+
+div[class*="-MuiPopper-root-MuiPickersPopper-root"] {
+    width: 100%;
+}
+
+li[class*="-MuiButtonBase-root-MuiMenuItem-root-MuiDigitalClock-item"] {
+    justify-content: center;
+}
+
+body {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.form-control {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.form-control:focus {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.form-floating>.form-control-plaintext~label::after,
+.form-floating>.form-control:focus~label::after,
+.form-floating>.form-control:not(:placeholder-shown)~label::after,
+.form-floating>.form-select~label::after {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.form-floating>.form-control-plaintext~label,
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label,
+.form-floating>.form-select~label {
+    color: var(--tg-theme-text-color) !important;
+    opacity: .65;
+}
+
+
+.btn-outline-primary {
+    --bs-btn-active-bg: var(--tg-theme-button-color) !important;
+    --bs-btn-active-border-color: var(--tg-theme-button-color) !important;
+    --bs-btn-color: var(--tg-theme-text-color) !important;
+    --bs-btn-active-color: var(--tg-theme-button-text-color);
+    --bs-btn-border-color: var(--tg-theme-button-color) !important;
+}
 
 .btn-primary {
-    border: 0;
     --bs-btn-bg: var(--tg-theme-button-color) !important;
+    --bs-btn-border-color: var(--tg-theme-button-color) !important;
+}
+
+* {
+    --bs-list-group-bg: var(--tg-theme-bg-color) !important;
+    --bs-list-group-color: var(--tg-theme-text-color) !important
 }
