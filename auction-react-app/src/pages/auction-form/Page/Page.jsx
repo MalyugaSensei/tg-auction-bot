@@ -9,7 +9,7 @@ export const Page = () => {
     <Container fluid>
       <Row>
         <Col>
-          <h1 className='text-center py-3'>Создать лот</h1>
+          <h1 className='text-center pb-3'>Создать лот</h1>
         </Col>
       </Row>
       <Row>
