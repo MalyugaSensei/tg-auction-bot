@@ -11,8 +11,9 @@
   "author": "Malyugin Artem",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^7.4.5",
-    "node-telegram-bot-api": "^0.61.0"
+    "mongoose": "^7.5.2",
+    "node-telegram-bot-api": "^0.61.0",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "nodemon": "3.0.1"

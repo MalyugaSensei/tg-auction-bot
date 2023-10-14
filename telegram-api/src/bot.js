@@ -1,7 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api')
 
 const token = '6411905843:AAGt28hKBBhLaYoUbssAGa-gYwdhW87WEjw'
-const url = `https://f17a-5-140-129-220.ngrok-free.app/bot/${token}`
+
+const hostUrl = process.env.WEBHOOK_URL
+const webHookUrl = `${hostUrl}/bot/${token}`
 const port = 3001
 
 const bot = new TelegramBot(token, {
@@ -10,7 +12,6 @@ const bot = new TelegramBot(token, {
     }
 })
 
-bot.setWebHook(url)
+bot.setWebHook(webHookUrl)
 
 module.exports = { bot }
-

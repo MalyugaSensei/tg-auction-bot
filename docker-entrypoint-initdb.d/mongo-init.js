@@ -1,3 +1,8 @@
+db.getSiblingDB('admin').auth(
+    process.env.MONGO_INITDB_ROOT_USERNAME,
+    process.env.MONGO_INITDB_ROOT_PASSWORD,
+)
+
 db.createUser(
     {
         user: 'auction_user',
@@ -5,4 +10,4 @@ db.createUser(
         roles: [{ role: 'readWrite', db: 'auction_db' }],
     },
 );
-//db.createCollection('auctions');
+
