@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 
 import { FormFeedback } from '@/shared/ui/FormFeedback'
 import { InputStickers } from '@/features/auction-form/ui/AddSticker'
-import { tg } from '@/shared/TelegramWebApp'
+import { tg } from '@/shared'
 
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -13,11 +13,11 @@ import './CustomDatePicker.css'
 import './CustomTimePicker.css'
 
 const wearArray = [
-    { title: 'Factory New', value: "factory_new" },
-    { title: 'Minimal Wear', value: "minimal_wear" },
-    { title: 'Field-Tested', value: "field_-_tested" },
-    { title: 'Well-Worm', value: 'well_-_worm' },
-    { title: 'Battle-Scarred', value: 'battle_-_scarred' },
+    { title: 'Factory New', value: "factory_new", range: [0, 0.07] },
+    { title: 'Minimal Wear', value: "minimal_wear", range: [0.07, 0.15] },
+    { title: 'Field-Tested', value: "field_-_tested", range: [0.15, 0.37] },
+    { title: 'Well-Worm', value: 'well_-_worm', range: [0.37, 0.45] },
+    { title: 'Battle-Scarred', value: 'battle_-_scarred', range: [0.45, 1.01] },
 ]
 
 export const AuctionForm = () => {
@@ -26,6 +26,9 @@ export const AuctionForm = () => {
         register,
         handleSubmit,
         control,
+        getValues,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm()
 
@@ -33,9 +36,29 @@ export const AuctionForm = () => {
         tg.ready()
     }, [])
 
+    watch('lotFloat')
+
     const onSubmit = (data) => {
         console.log(data)
         tg.sendData(JSON.stringify(data))
+    }
+
+    const dynamicLotWear = (item) => {
+        let lotFloat = getValues('lotFloat');
+
+        if (!lotFloat) {
+            return false;
+        }
+
+        if (!item) {
+            return false;
+        }
+
+        if (lotFloat >= item.range[0] && lotFloat < item.range[1]) {
+            setValue('lotWear', item.value)
+            return true;
+        }
+
     }
 
     return (
@@ -60,7 +83,7 @@ export const AuctionForm = () => {
                     <Form.Control
                         autoComplete='off'
                         type='number'
-                        step=".000000000001"
+                        step=".000000000000000001"
                         size='lg'
                         pattern="[0-9]*[.,]?[0-9]*"
                         placeholder='Введите Float лота'
@@ -80,7 +103,7 @@ export const AuctionForm = () => {
                 <FormFeedback field={errors.lotFloat} />
             </Form.Group>
             <Form.Group className='mb-3'>
-                <Form.Label>Изношеность</Form.Label>
+                <Form.Label style={{ lineHeight: 1 }}>Изношеность</Form.Label>
                 <div className='d-flex flex-wrap'>
                     <div role='group' className='btn-group'>
                         {wearArray.map((item, idx) => {
@@ -91,6 +114,7 @@ export const AuctionForm = () => {
                                         type="radio"
                                         id={`radio-${idx}`}
                                         autoComplete='off'
+                                        checked={dynamicLotWear(item)}
                                         value={item.value}
                                         {...register('lotWear',
                                             { required: "Выберите изношенность предмета" }
@@ -145,7 +169,7 @@ export const AuctionForm = () => {
                 </Form.FloatingLabel>
                 <FormFeedback field={errors.finishAt} />
             </Form.Group>
-            <Button variant='primary' size='lg' className='w-100 mb-3' type='submit'>
+            <Button variant='primary' size='lg' className='w-100' type='submit'>
                 Создать
             </Button>
         </Form >

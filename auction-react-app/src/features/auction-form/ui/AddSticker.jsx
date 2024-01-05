@@ -37,7 +37,11 @@ export const InputStickers = ({ control }) => {
                     )
                 }
             </ListGroup>
-            <InputAccept label='Наклейка' placeholder='Ввдеите название наклейки' onClick={onClick} />
+            <InputAccept
+                label='Наклейка'
+                placeholder='Ввдеите название наклейки'
+                onClick={onClick}
+                errorMessage='Введите название наклейки' />
         </>
 
     )

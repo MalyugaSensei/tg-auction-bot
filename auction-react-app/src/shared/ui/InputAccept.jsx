@@ -3,14 +3,18 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { InputGroup } from 'react-bootstrap'
 
-function InputAccept({ label, placeholder, onClick }) {
-    const [sticketField, setStickerField] = useState('')
+/**
+ * @param { any } props 
+ * @returns 
+ */
+function InputAccept({ label, placeholder, onClick, errorMessage }) {
+    const [value, setValue] = useState('')
     const [valid, setValid] = useState(true)
 
     const onClickHandler = (text) => {
         if (text.length) {
             onClick(text)
-            setStickerField('')
+            setValue('')
             setValid(true)
             return;
         }
@@ -23,7 +27,7 @@ function InputAccept({ label, placeholder, onClick }) {
         if (event.target.value) {
             setValid(true)
         }
-        setStickerField(event.target.value)
+        setValue(event.target.value)
     }
     return (
         <InputGroup className='d-flex mb-3'>
@@ -35,20 +39,20 @@ function InputAccept({ label, placeholder, onClick }) {
                     type='text'
                     size='lg'
                     placeholder={placeholder}
-                    defaultValue={sticketField} onChange={onChangeHandler}
+                    defaultValue={value}
+                    onChange={onChangeHandler}
                     isInvalid={!valid} />
             </Form.FloatingLabel>
             <Form.Control.Feedback type="invalid">
-                Введите название наклейки
+                {errorMessage}
             </Form.Control.Feedback>
             <Button
                 variant='outline-success'
-                onClick={() => onClickHandler(sticketField)}
+                onClick={() => onClickHandler(value)}
             >
                 <i className='gg-check'></i>
             </Button>
         </InputGroup>
-
     )
 }
 

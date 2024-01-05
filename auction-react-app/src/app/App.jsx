@@ -2,6 +2,9 @@ import { useState } from 'react'
 import reactLogo from '@/shared/assets/react.svg'
 import viteLogo from '/vite.svg'
 
+/**
+ * !Depricated
+ */
 function App() {
   const [count, setCount] = useState(0)
 
