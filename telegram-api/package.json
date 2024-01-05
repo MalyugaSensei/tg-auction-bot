@@ -11,11 +11,11 @@
   "author": "Malyugin Artem",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^7.5.2",
-    "node-telegram-bot-api": "^0.61.0",
+    "mongoose": "^8.0.3",
+    "node-telegram-bot-api": "^0.64.0",
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "nodemon": "3.0.1"
+    "nodemon": "3.0.2"
   }
 }

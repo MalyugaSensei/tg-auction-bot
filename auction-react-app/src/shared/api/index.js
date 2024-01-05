@@ -1,0 +1,1 @@
+export { tg } from './TelegramWebApp'

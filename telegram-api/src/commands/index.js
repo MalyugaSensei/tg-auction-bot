@@ -9,13 +9,10 @@ bot.onText(/Меню/, MainMenu)
 
 bot.onText(/Текущий аукцион/, CurrentAuction)
 
-bot.on('message', msg => {
+bot.on('web_app_data', msg => {
     console.log(msg.web_app_data)
     if (msg.web_app_data?.data) {
         CreateAuction(msg)
     }
 })
 
-bot.on('polling_error', (error) => {
-    console.log(error)
-})

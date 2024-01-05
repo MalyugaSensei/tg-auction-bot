@@ -12,7 +12,7 @@ const wearArray = [
 ]
 
 /**
- * 
+ * This function validate user data from form
  * @param { Object } formData
  * @param { String } formData.lotName
  * @param { String } formData.lotFloat
@@ -20,60 +20,64 @@ const wearArray = [
  * @param { Number } formData.lotStartPrice
  * @param { Array } formData.lotStickers
  * @param { Date } formData.finishAt 
- * @returns { Boolean }
+ * @returns { Promise<boolean> }
  */
 const ValidateAuctionForm = ({ lotName, lotFloat, lotWear, lotStartPrice, lotStickers, finishAt }) => {
-    if (validator.isEmpty(lotName)) {
-        return false;
-    }
+    return new Promise((resolve, reject) => {
+        if (validator.isEmpty(lotName)) {
+            throw Error('lotName is not valid');
+        }
 
-    if (!validator.isFloat(lotFloat, { min: 0, max: 1 })) {
-        return false;
-    }
+        if (!validator.isFloat(lotFloat.toString(), { min: 0, max: 1 })) {
+            throw Error('lotFloat is not valid');
+        }
 
-    if (!validator.isIn(lotWear, wearArray)) {
-        return false;
-    }
+        if (!validator.isIn(lotWear, wearArray)) {
+            throw Error('lotWear is not valid');
+        }
 
-    if (validator.isNumeric(lotStartPrice)) {
-        return false;
-    }
+        if (!validator.isNumeric(lotStartPrice)) {
+            throw Error('lotStartPrice is not valid');
+        }
 
-    if (Array.isArray(lotStickers)) {
-        return false;
-    }
+        if (!Array.isArray(lotStickers)) {
+            throw Error('lotStickers is not valid');
+        }
 
-    if (validator.isDate(finishAt) && finishAt <= new Date()) {
-        return false;
-    }
+        if (!validator.isDate(finishAt) && finishAt <= new Date()) {
+            throw Error('finishAt is not valid');
+        }
 
-    return true;
+        resolve(true);
+    })
 }
 
 /**
  * 
  * @param {TelegramBot.Message} msg 
  */
-const CreateAuction = (msg) => {
+const CreateAuction = async (msg) => {
     const chatId = msg.chat.id
     console.log(msg.web_app_data.data)
     const formData = JSON.parse(msg.web_app_data.data)
 
-    const validate = ValidateAuctionForm(formData)
+    try {
+        await ValidateAuctionForm(formData)
+        console.log(formData)
+        const auction = new Auction({
+            lotName: formData.lotName,
+            lotFloat: formData.lotFloat,
+            lotWear: formData.lotWear,
+            lotStartPrice: formData.lotStartPrice,
+            stickers: formData.lotStickers
+        })
 
-    if (!validate) {
+        auction.save()
+    } catch (error) {
+        console.log(error)
         bot.sendMessage(chatId, "Что-то пошло не так")
     }
-    console.log(formData)
-    const auction = new Auction({
-        lotName: formData.lotName,
-        lotFloat: formData.lotFloat,
-        lotWear: formData.lotWear,
-        lotStartPrice: formData.lotStartPrice,
-        stickers: formData.lotStickers
-    })
 
-    auction.save()
 }
 
 module.exports = {

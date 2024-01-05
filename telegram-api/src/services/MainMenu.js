@@ -7,7 +7,7 @@ let keyboard = [
     [{ text: 'О нас' }, { text: 'Контакты' }]
 ]
 /**
- * 
+ * Bot main menu
  * @param { TelegramBot.Message } msg 
  */
 const MainMenu = (msg) => {
