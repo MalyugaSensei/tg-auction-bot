@@ -1,12 +1,17 @@
 {
     "compilerOptions": {
         "module": "CommonJS",
-        "target": "ES2022",
+        "target": "ES6",
+        "moduleResolution": "node",
         "checkJs": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": [
+                "src/*"
+            ]
         }
     },
-    "exclude": ["node_modules"],
+    "exclude": [
+        "node_modules"
+    ],
 }
