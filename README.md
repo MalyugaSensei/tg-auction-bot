@@ -1,5 +1,7 @@
 # tg-auction-bot
 
+Проект вдохновлен https://vk.com/treid4chanstore
+
 This project was created to automatically create and conduct auctions using the telegram bot api. 
 Technology stack:
 ## Backend
