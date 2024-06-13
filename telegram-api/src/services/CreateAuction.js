@@ -2,6 +2,7 @@ const { bot } = require("../bot")
 const TelegramBot = require("node-telegram-bot-api")
 const { Auction } = require('../db/models')
 const validator = require('validator/validator')
+const createAuctionTask = require("../services/auctionTasks/createTask")
 
 const wearArray = [
     'factory_new',
@@ -69,10 +70,13 @@ const CreateAuction = async (msg) => {
             lotFloat: formData.lotFloat,
             lotWear: formData.lotWear,
             lotStartPrice: formData.lotStartPrice,
-            stickers: formData.lotStickers
+            stickers: formData.lotStickers,
+            startAt: formData.startAt,
+            finishedAt: null
         })
 
-        auction.save()
+        const { id } = await auction.save()
+        await createAuctionTask(id, formData.startAt)
     } catch (error) {
         console.log(error)
         bot.sendMessage(chatId, "Что-то пошло не так")
