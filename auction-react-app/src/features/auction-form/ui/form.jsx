@@ -7,8 +7,8 @@ import { FormFeedback } from '@/shared/ui/FormFeedback'
 import { InputStickers } from '@/features/auction-form/ui/AddSticker'
 import { tg } from '@/shared'
 
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
+//import 'react-date-picker/dist/DatePicker.css';
+//import 'react-calendar/dist/Calendar.css';
 import './CustomDatePicker.css'
 import './CustomTimePicker.css'
 
@@ -39,8 +39,9 @@ export const AuctionForm = () => {
     watch('lotFloat')
 
     const onSubmit = (data) => {
-        console.log(data)
+        data.startAt = new Date(data.startAt).toISOString()
         tg.sendData(JSON.stringify(data))
+        debugger
     }
 
     const dynamicLotWear = (item) => {
@@ -153,7 +154,7 @@ export const AuctionForm = () => {
                         size='lg'
                         style={{ paddingTop: "1.8rem" }}
                         placeholder='дд.мм.гггг --:--'
-                        {...register('finishAt', {
+                        {...register('startAt', {
                             required: "Обязательное поле",
                             validate: {
                                 validateDate: (date) => {
@@ -167,7 +168,7 @@ export const AuctionForm = () => {
                         })}
                     />
                 </Form.FloatingLabel>
-                <FormFeedback field={errors.finishAt} />
+                <FormFeedback field={errors.startAt} />
             </Form.Group>
             <Button variant='primary' size='lg' className='w-100' type='submit'>
                 Создать
