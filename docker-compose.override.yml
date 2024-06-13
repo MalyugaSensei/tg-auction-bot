@@ -1,0 +1,15 @@
+services:
+  auction-react-app:
+    build:
+      context: ./auction-react-app
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+  tg-auction-bot:
+    build:
+      context: ./telegram-api
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+    ports:
+      - 9229:9229
