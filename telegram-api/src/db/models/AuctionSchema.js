@@ -1,23 +1,25 @@
-const { Schema, model } = require('mongoose')
-const { AutoIncrement } = require('../connection')
+const mongoose = require('mongoose')
+const Inc = require('mongoose-sequence')(mongoose)
 
-const AuctionScheme = new Schema({
+const AuctionScheme = new mongoose.Schema({
     auctionId: { type: Number, unique: true },
     lotName: { type: String, required: true },
-    lotFloat: { type: Schema.Types.Decimal128, required: true },
+    lotFloat: { type: mongoose.Schema.Types.Decimal128, required: true },
     lotWear: { type: String, required: true },
     stickers: [{
-        name: String,
+        title: String,
     }],
     lotStartPrice: { type: Number, required: true },
+    status: { type: String, enum: ['active', 'pending', 'ended'], required: true },
     startAt: { type: Date, required: true },
     finishedAt: Date,
-    bidId: { type: Schema.Types.ObjectId, ref: 'Bid' },
+    bidId: { type: mongoose.Schema.Types.ObjectId, ref: 'Bid' },
 }, { timestamps: true })
 
-AuctionScheme.plugin(AutoIncrement, { inc_field: 'auctionId', })
 
-const Auction = model('Auction', AuctionScheme)
+AuctionScheme.plugin(Inc, { inc_field: 'auctionId', })
+
+const Auction = mongoose.model('Auction', AuctionScheme)
 
 module.exports = {
     Auction

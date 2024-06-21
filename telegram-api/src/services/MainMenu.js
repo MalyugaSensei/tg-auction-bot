@@ -1,9 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api')
-const { bot } = require('../bot')
+const { bot } = require('@/bot')
 
 const webAppUrl = process.env.WEB_APP_URL
 let keyboard = [
-    [{ text: 'Текущий аукцион' }, { text: 'Создать аукцион', web_app: { url: webAppUrl } }],
+    [{ text: 'Все аукционы' }, { text: 'Создать аукцион', web_app: { url: webAppUrl } }],
     [{ text: 'О нас' }, { text: 'Контакты' }]
 ]
 /**

@@ -1,8 +1,9 @@
-const { bot } = require("../bot")
 const TelegramBot = require("node-telegram-bot-api")
-const { Auction } = require('../db/models')
 const validator = require('validator/validator')
-const createAuctionTask = require("../services/auctionTasks/createTask")
+
+const { bot } = require("@/bot")
+const { Auction } = require('@/db/models')
+const createAuctionTask = require("@/services/auction/createTask")
 
 const wearArray = [
     'factory_new',
@@ -57,9 +58,9 @@ const ValidateAuctionForm = ({ lotName, lotFloat, lotWear, lotStartPrice, lotSti
  * 
  * @param {TelegramBot.Message} msg 
  */
-const CreateAuction = async (msg) => {
+const createAuction = async (msg) => {
     const chatId = msg.chat.id
-    console.log(msg.web_app_data.data)
+    //console.log(msg.web_app_data.data)
     const formData = JSON.parse(msg.web_app_data.data)
 
     try {
@@ -71,12 +72,14 @@ const CreateAuction = async (msg) => {
             lotWear: formData.lotWear,
             lotStartPrice: formData.lotStartPrice,
             stickers: formData.lotStickers,
+            status: new Date().getTime() > formData.startAt ? 'active' : 'pending',
             startAt: formData.startAt,
-            finishedAt: null
+            finishedAt: new Date(new Date(formData.startAt).getTime() + 24 * 60 * 60 * 1000),
         })
 
-        const { id } = await auction.save()
-        await createAuctionTask(id, formData.startAt)
+        const savedAuction = await auction.save()
+        console.log(savedAuction)
+        await createAuctionTask(savedAuction)
     } catch (error) {
         console.log(error)
         bot.sendMessage(chatId, "Что-то пошло не так")
@@ -85,5 +88,5 @@ const CreateAuction = async (msg) => {
 }
 
 module.exports = {
-    CreateAuction
+    createAuction
 }
