@@ -18,6 +18,11 @@ const getSubscribers = () => {
     return subscribers;
 };
 
+/**
+ * 
+ * @param {string} name 
+ * @returns 
+ */
 const getSubscriber = (name) => {
     if (!subscribers) {
         throw new Error("Subscribers have not been initialized. Call initRedisSubscribers first.");

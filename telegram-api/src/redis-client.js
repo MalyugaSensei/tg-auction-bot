@@ -20,11 +20,10 @@ const initRedis = async () => {
 
 /**
  * 
- * @typedef { typeof client } RedisClientType
- * @param { RedisClientType } client
+ * @param { import('redis').RedisClientType<any, any, any> } client
  * @param {string | Array<string> } channels
  * @param { (message: string, channel?: string) => unknown } listener
- * @return {import('redis').RedisClientType}
+ * @return {import('redis').RedisClientType<any, any, any>}
  */
 const createSubscriber = (client, channels, listener) => {
     const subscriber = client.duplicate();
